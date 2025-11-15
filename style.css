@@ -468,8 +468,7 @@ section {
     visibility: hidden;
 }
 .nav-overlay.is-active {
-    opacity: 1;
-    visibility: visible;
+   
 }
 
 /* --- 11. MEDIA QUERIES (RESPONSIVE) --- */

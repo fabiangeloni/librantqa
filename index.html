@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lybrant QA - Expert QA & DevOps Testing</title>
+    
+    <link rel="icon" href="logo-lybrant.png" type="image/png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="#" class="logo-link">
+                <img src="logo-lybrant.png" alt="Lybrant QA Logo" class="logo">
+            </a>
+
+            <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#">Servicios</a></li>
+                    <li><a href="#">Casos de estudio</a></li>
+                    <li><a href="#">Nosotros</a></li>
+                    <li><a href="#" class="cta-button">Consultar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            
+            <video class="hero-video" autoplay loop muted playsinline poster="hero-poster.jpg">
+                <source src="hero-video.mp4" type="video/mp4">
+            </video>
+
+            <div class="hero-overlay"></div>
+
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h1>Entrega software en el que puedas confiar.</h1>
+                    <p class="subtitle">Servicios expertos en QA Automation y DevOps Testing para equipos que exigen excelencia.</p>
+                    <div class="cta-group">
+                        <a href="#" class="cta-button">Obtener Cotización</a>
+                        <a href="#" class="cta-button secondary">Ver Casos</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials-section gsap-fade-in">
+            <div class="container">
+                <h2 class="text-white">Lo que dicen nuestros clientes</h2>
+                
+                <div class="splide" id="testimonial-slider" role="group" aria-label="Testimonios de clientes">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+
+                            <li class="splide__slide">
+                                <div class="testimonial-card">
+                                    <p class="testimonial-quote">"El framework de automatización que implementaron redujo nuestro tiempo de testing en un 60%. Imprescindibles."</p>
+                                    <div class="testimonial-author">
+                                        <span class="author-name">Technical Tom</span>
+                                        <span class="author-title">CTO, Tech Solutions Inc.</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="splide__slide">
+                                <div class="testimonial-card">
+                                    <p class="testimonial-quote">"Lybrant fue clave para cumplir nuestro deadline. Sus reportes de bugs son impecables y la comunicación es fluida."</p>
+                                    <div class="testimonial-author">
+                                        <span class="author-name">Corporate Carla</span>
+                                        <span class="author-title">Project Manager, FinApp</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="splide__slide">
+                                <div class="testimonial-card">
+                                    <p class="testimonial-quote">"Lanzamos nuestro MVP a tiempo y sin errores críticos. Entendieron perfectamente nuestras necesidades de startup."</p>
+                                    <div class="testimonial-author">
+                                        <span class="author-name">Startup Steve</span>
+                                        <span class="author-title">Founder, QuickMVP</span>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="segmentation-section gsap-fade-in">
+            <div class="container">
+                <h2>¿Cuál es tu desafío principal?</h2>
+                <div class="cards-container">
+                    
+                    <div class="card" data-target="steve">
+                        <div class="card-icon"><i class="fa-solid fa-rocket"></i></div>
+                        <h3>Lanzar mi MVP rápido y sin errores</h3>
+                        <p>Para Fundadores y Startups.</p>
+                    </div>
+
+                    <div class="card" data-target="carla">
+                        <div class="card-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                        <h3>Cumplir deadlines sin bugs críticos</h3>
+                        <p>Para Gerentes de Proyecto.</p>
+                    </div>
+
+                    <div class="card" data-target="tom">
+                        <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <h3>Escalar mi CI/CD y optimizar rendimiento</h3>
+                        <p>Para CTOs y Líderes Técnicos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section gsap-fade-in">
+            <div class="container">
+                
+                <div class="content-panel" id="general" data-content="general">
+                    <h3>Tu socio estratégico en Calidad de Software</h3>
+                    <p>Combinamos automatización de punta y expertise en DevOps para asegurar que tu producto sea robusto, escalable y confiable desde el día uno. Selecciona tu desafío principal arriba para ver un enfoque a medida.</p>
+                </div>
+
+                <div class="content-panel" id="steve" data-content="steve">
+                    <h3>[Para Steve] De MVP a Producto Escalable, Rápido.</h3>
+                    <ul>
+                        <li><span class="check-icon">✓</span> Velocidad de Mercado (Time-to-Market) garantizada.</li>
+                        <li><span class="check-icon">✓</span> QA Enfocado (Lean QA) para optimizar tu presupuesto.</li>
+                        <li><span class="check-icon">✓</span> Prevención de Deuda Técnica para crecer sin fricción.</li>
+                    </ul>
+                </div>
+
+                <div class="content-panel" id="carla" data-content="carla">
+                    <h3>[Para Carla] Tu Socio de QA para Proyectos Predecibles.</h3>
+                    <ul>
+                        <li><span class="check-icon">✓</span> Reportes Claros y accionables. Cero sorpresas.</li>
+                        <li><span class="check-icon">✓</span> Cumplimiento de plazos (Agile/Scrum).</li>
+                        <li><span class="check-icon">✓</span> Trazabilidad Total y documentación rigurosa.</li>
+                    </ul>
+                </div>
+
+                <div class="content-panel" id="tom" data-content="tom">
+                    <h3>[Para Tom] Ingeniería de Calidad para Alto Rendimiento.</h3>
+                    <ul>
+                        <li><span class="check-icon">✓</span> Automatización avanzada del Pipeline CI/CD.</li>
+                        <li><span class="check-icon">✓</span> Frameworks Escalables (Cypress, Playwright).</li>
+                        <li><span class="check-icon">✓</span> Testing Avanzado: Rendimiento, Carga y Seguridad.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="process-section gsap-fade-in">
+            <div class="container">
+                <h2>Nuestro Proceso Probado</h2>
+                <p class="section-subtitle">Tenemos un método claro para llevar tu producto del desarrollo a la excelencia.</p>
+                
+                <div class="process-grid">
+                    <div class="process-card">
+                        <div class="process-step-number">01</div>
+                        <h3 class="process-step-title">Descubrimiento y Análisis</h3>
+                        <p>Nos sumergimos en tu stack y objetivos para identificar los riesgos clave.</p>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-step-number">02</div>
+                        <h3 class="process-step-title">Estrategia y Planificación</h3>
+                        <p>Diseñamos un plan de testing a medida con las herramientas y métricas de éxito correctas.</p>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-step-number">03</div>
+                        <h3 class="process-step-title">Implementación y Ejecución</h3>
+                        <p>Integramos la automatización en tu pipeline de CI/CD y reportamos bugs de forma accionable.</p>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-step-number">04</div>
+                        <h3 class="process-step-title">Reporte y Optimización</h3>
+                        <p>Recibes reportes continuos y optimizamos el proceso para mejorar la calidad en cada sprint.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="pre-footer-section gsap-fade-in">
+            
+            <video class="hero-video" autoplay loop muted playsinline poster="hero-poster.jpg">
+                <source src="hero-video.mp4" type="video/mp4">
+            </video>
+
+            <div class="hero-overlay"></div>
+
+            <div class="container pre-footer-container">
+                <h2 class="text-white">¿Listo para transformar tu calidad?</h2>
+                <p class="subtitle text-white-70">Hablemos de cómo podemos construir un producto robusto y confiable juntos.</p>
+                <div class="cta-group">
+                    <a href="#" class="cta-button">Obtener una Cotización</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer gsap-fade-in">
+        <div class="container">
+            <p>© 2025 Lybrant. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="nav-overlay"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>

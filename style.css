@@ -13,7 +13,7 @@
     --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.07);
     --radius: 8px;
     
-    --header-height: 95px; /* (55px logo + 40px padding) */
+    --header-height: 180px; /* (55px logo + 40px padding) */
 }
 
 /* --- 2. RESET Y ESTILOS GLOBALES --- */
@@ -66,6 +66,8 @@ a { color: var(--color-accent); text-decoration: none; }
 .logo {
     height:62px;
     width: auto;
+    z-index: 99999 !important;
+    position: relative;
 }
 .main-nav ul {
     list-style: none;
@@ -100,6 +102,8 @@ a { color: var(--color-accent); text-decoration: none; }
 .main-nav a:not(.cta-button):hover::after {
     transform: scaleX(1);
 }
+
+.procesos{background-color: #e3e3eb !important;}
 
 /* --- 4. BOTONES (CTA) --- */
 .cta-button {
@@ -171,6 +175,7 @@ section {
 .hero-container {
     position: relative; 
     z-index: 3;
+    max-width: 760px;
 }
 .hero-content h1 {
     color: #FFFFFF; 
@@ -282,7 +287,12 @@ section {
 .card-icon {
     font-size: 2.5rem;
     margin-bottom: 15px;
-    color: var(--color-accent); 
+    color: var(--color-accent);
+    margin: 20px auto;
+    display: flex
+;
+    flex-direction: column;
+    align-items: center;
 }
 .card p {
     font-size: 0.9rem;
@@ -467,9 +477,7 @@ section {
     transition: opacity 0.3s ease;
     visibility: hidden;
 }
-.nav-overlay.is-active {
-   
-}
+
 
 /* --- 11. MEDIA QUERIES (RESPONSIVE) --- */
 @media (max-width: 992px) {

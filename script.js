@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // --- 4. ANIMACIONES DE SCROLL (BARRIDO HORIZONTAL + RESPONSIVE) ---
     
-    // 4.1. Animación General de Carga
+    // 4.1. Animación General de Carga (Esto corre en AMBOS, desktop y móvil)
     gsap.from('body', { duration: 0.5, autoAlpha: 0, ease: 'power3.out' });
     gsap.from('.main-header', { duration: 1, yPercent: -100, autoAlpha: 0, ease: 'power3.out', delay: 0.1 });
     gsap.from(".hero-content > *", { 
@@ -75,58 +75,39 @@ document.addEventListener("DOMContentLoaded", function() {
     // 4.2. Animación "Weave" (Alternancia Horizontal)
     const sections = gsap.utils.toArray('main > section:not(.hero-section)');
 
-    // --- ¡USAMOS MATCHMEDIA PARA TIMING DIFERENTE! ---
     ScrollTrigger.matchMedia({
 
-        // 1. Configuración para DESKTOP
+        // 1. Configuración para DESKTOP (SÍ corre la animación "weave")
         "(min-width: 993px)": function() {
             sections.forEach((section, index) => {
                 const heading = section.querySelector('h2');
                 const subtitle = section.querySelector('.section-subtitle');
-                // ¡Animamos los contenedores de contenido!
                 const content = section.querySelectorAll('.splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container');
 
-                // Dirección del barrido
                 const xPercent = (index % 2 === 0) ? -50 : 50;
                 
                 const tl = gsap.timeline({
                     scrollTrigger: {
                         trigger: section,
-                        start: 'top 85%', // <-- Trigger LENTO para desktop
+                        start: 'top 85%', 
                         toggleActions: 'play none none none'
                     }
                 });
                 
-                // ¡Animación HORIZONTAL (`xPercent`)!
                 if (heading) tl.from(heading, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' });
                 if (subtitle) tl.from(subtitle, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' }, "-=1.0");
                 if (content) tl.from(content, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' }, "-=0.9");
             });
         },
 
-        // 2. Configuración para MÓVIL
+        // 2. Configuración para MÓVIL (NO corre NINGUNA animación de scroll)
         "(max-width: 992px)": function() {
-            sections.forEach((section, index) => {
-                const heading = section.querySelector('h2');
-                const subtitle = section.querySelector('.section-subtitle');
-                const content = section.querySelectorAll('.splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container');
-                
-                // Mantenemos la dirección
-                const xPercent = (index % 2 === 0) ? -50 : 50;
-
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top bottom-=10%', // <-- Trigger RÁPIDO para móvil (Arregla el espacio)
-                        toggleActions: 'play none none none'
-                    }
-                });
-
-                // Mantenemos la animación HORIZONTAL, pero más rápida
-                if (heading) tl.from(heading, { autoAlpha: 0, xPercent: xPercent, duration: 0.8, ease: 'power3.out' });
-                if (subtitle) tl.from(subtitle, { autoAlpha: 0, xPercent: xPercent, duration: 0.8, ease: 'power3.out' }, "-=0.7");
-                if (content) tl.from(content, { autoAlpha: 0, xPercent: xPercent, duration: 0.8, stagger: 0.1, ease: 'power3.out' }, "-=0.7");
-            });
+            
+            // ¡BLOQUE VACÍO!
+            // Al no crear ninguna animación de GSAP aquí, los elementos
+            // simplemente se mostrarán con su CSS por defecto.
+            // Esto elimina 100% el problema de los espacios en blanco.
+            
         }
     });
 

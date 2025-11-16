@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
             currentActivePanel = targetPanel;
             
             lenis.scrollTo(contentSection, {
-                offset: -180, // Ajustado a tu altura de header
+                offset: -180, 
                 duration: 1.2,
                 ease: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
             });
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    // --- 4. ANIMACIONES DE SCROLL (BARRIDO HORIZONTAL + RESPONSIVE) ---
+    // --- 4. ANIMACIONES DE SCROLL (BARRIDO HORIZONTAL + TRIGGER CORREGIDO) ---
     
     // 4.1. Animación General de Carga
     gsap.from('body', { duration: 0.5, autoAlpha: 0, ease: 'power3.out' });
@@ -75,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // 4.2. Animación "Weave" (Alternancia Horizontal)
     const sections = gsap.utils.toArray('main > section:not(.hero-section)');
 
-    // --- ¡USAMOS MATCHMEDIA PARA TIMING DIFERENTE! ---
     ScrollTrigger.matchMedia({
 
         // 1. Configuración para DESKTOP
@@ -83,24 +82,22 @@ document.addEventListener("DOMContentLoaded", function() {
             sections.forEach((section, index) => {
                 const heading = section.querySelector('h2');
                 const subtitle = section.querySelector('.section-subtitle');
-                // ¡Animamos los contenedores de contenido!
-                const content = section.querySelectorAll('.splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container');
+                // ¡Animamos los hijos/cards individuales!
+                const content = section.querySelectorAll('.splide, .card, .content-panel#general, .process-card, .service-item, .pre-footer-container > *, .main-footer p');
 
-                // Dirección del barrido
                 const xPercent = (index % 2 === 0) ? -50 : 50;
                 
                 const tl = gsap.timeline({
                     scrollTrigger: {
                         trigger: section,
-                        start: 'top 85%', // <-- Trigger LENTO para desktop
+                        start: 'top 85%', // Lento en desktop
                         toggleActions: 'play none none none'
                     }
                 });
                 
-                // ¡Animación HORIZONTAL (`xPercent`)!
                 if (heading) tl.from(heading, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' });
                 if (subtitle) tl.from(subtitle, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' }, "-=1.0");
-                if (content) tl.from(content, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' }, "-=0.9");
+                if (content) tl.from(content, { autoAlpha: 0, xPercent: xPercent, duration: 1.0, stagger: 0.1, ease: 'power3.out' }, "-=0.9");
             });
         },
 
@@ -109,23 +106,24 @@ document.addEventListener("DOMContentLoaded", function() {
             sections.forEach((section, index) => {
                 const heading = section.querySelector('h2');
                 const subtitle = section.querySelector('.section-subtitle');
-                const content = section.querySelectorAll('.splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container');
+                const content = section.querySelectorAll('.splide, .card, .content-panel#general, .process-card, .service-item, .pre-footer-container > *, .main-footer p');
                 
-                // Mantenemos la dirección
-                const xPercent = (index % 2 === 0) ? -50 : 50;
+                const xPercent = (index % 2 === 0) ? -30 : 30; // Animación horizontal más sutil
 
                 const tl = gsap.timeline({
                     scrollTrigger: {
                         trigger: section,
-                        start: 'top 95%', // <-- Trigger RÁPIDO para móvil (Arregla el espacio)
+                        // --- ¡ESTE ES EL ARREGLO! ---
+                        // "Inicia cuando el TOP de la sección esté 10% por ENCIMA del BOTTOM de la pantalla"
+                        start: 'top bottom-=10%', 
                         toggleActions: 'play none none none'
                     }
                 });
 
-                // Mantenemos la animación HORIZONTAL, pero más rápida
+                // Animación más rápida para móvil
                 if (heading) tl.from(heading, { autoAlpha: 0, xPercent: xPercent, duration: 0.8, ease: 'power3.out' });
                 if (subtitle) tl.from(subtitle, { autoAlpha: 0, xPercent: xPercent, duration: 0.8, ease: 'power3.out' }, "-=0.7");
-                if (content) tl.from(content, { autoAlpha: 0, xPercent: xPercent, duration: 0.8, stagger: 0.1, ease: 'power3.out' }, "-=0.7");
+                if (content) tl.from(content, { autoAlpha: 0, xPercent: xPercent, duration: 0.8, stagger: 0.05, ease: 'power3.out' }, "-=0.7");
             });
         }
     });

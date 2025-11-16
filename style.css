@@ -242,7 +242,7 @@ section {
     justify-content: space-between;
 }
 .testimonial-quote {
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 500;
     line-height: 1.6;
     color: var(--color-text-headings);
@@ -632,6 +632,7 @@ section {
     }
     .cta-group a {
         max-width: 350px;
+        padding: 5px !important;
     }
     
     .hero-section .hero-video,

@@ -968,3 +968,55 @@ section {
         margin: 0 12px; /* Ajustar espaciado de iconos */
     }
 }
+
+/* --- 13. SELECTOR DE IDIOMA --- */
+
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 10px; /* Pequeño espacio extra en desktop */
+}
+
+.lang-separator {
+    color: var(--color-border);
+    font-weight: 600;
+    margin: 0 2px;
+}
+
+.lang-link {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    opacity: 0.6; /* Los inactivos se ven apagados */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 5px;
+}
+
+.lang-link.active {
+    color: var(--color-primary);
+    opacity: 1; /* El activo resalta */
+}
+
+.lang-link:hover {
+    opacity: 1;
+    color: var(--color-accent);
+}
+
+/* --- Ajustes para el menú móvil --- */
+@media (max-width: 992px) {
+    .lang-switcher {
+        justify-content: center; /* Centramos el switcher en el menú */
+        padding: 15px 0;
+        margin-top: 15px;
+        margin-left: 0;
+        width: 100%;
+        border-top: 1px solid var(--color-border); /* Un separador */
+    }
+
+    .lang-link {
+        font-size: 1.1rem; /* Un poco más grande para tocarlo */
+    }
+}

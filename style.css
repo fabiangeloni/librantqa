@@ -1,11 +1,12 @@
 /* --- 1. CONFIGURACIÓN Y VARIABLES --- */
 :root {
-    --color-primary: #081e41; /* Azul Oscuro (del logo) */
-    --color-accent: #2278c0;  /* Cian de Acento (del logo) */
+    --color-primary: #081e41;
+    --color-accent: #2278c0;
+    --color-highlight: #FFC107; 
     --color-bg: #FFFFFF;
     --color-bg-secondary: #F8F9FA;
     --color-text: #495057;
-    --color-text-headings: #0a364e; /* Mismo que primario */
+    --color-text-headings: #0a364e;
     --color-border: #E9ECEF;
     --font-heading: 'Montserrat', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -13,7 +14,7 @@
     --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.07);
     --radius: 8px;
     
-    --header-height: 180px; /* (55px logo + 40px padding) */
+    --header-height: 180px; 
 }
 
 /* --- 2. RESET Y ESTILOS GLOBALES --- */
@@ -31,7 +32,7 @@ body.nav-active {
 }
 
 .container {
-    max-width: 1100px;
+    max-width: 980px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -55,7 +56,7 @@ a { color: var(--color-accent); text-decoration: none; }
     padding: 10px 0 5px 0;
     position: sticky;
     top: 0;
-    z-index: 100; /* EL MÁS ALTO */
+    z-index: 100; 
     box-shadow: var(--shadow-sm);
 }
 .main-header .container {
@@ -138,6 +139,7 @@ a { color: var(--color-accent); text-decoration: none; }
 /* --- 5. SECCIONES --- */
 section {
     padding: 80px 0;
+    overflow: hidden;
 }
 
 /* --- SECCIÓN HERO --- */
@@ -148,7 +150,6 @@ section {
     align-items: center;
     text-align: center;
     position: relative; 
-    overflow: hidden; 
     background-color: var(--color-primary); 
 }
 .hero-video {
@@ -169,7 +170,7 @@ section {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(2, 16, 55, 0.39);
+    background-color: rgba(2, 16, 55, 0.39); 
     z-index: 2;
 }
 .hero-container {
@@ -287,12 +288,14 @@ section {
 .card-icon {
     font-size: 2.5rem;
     margin-bottom: 15px;
-    color: var(--color-accent);
     margin: 20px auto;
-    display: flex
-;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    
+    color: transparent;
+    -webkit-text-stroke: 2px var(--color-highlight); 
+    text-stroke: 2px var(--color-highlight);
 }
 .card p {
     font-size: 0.9rem;
@@ -303,7 +306,6 @@ section {
 /* --- 8. SECCIÓN DE CONTENIDO --- */
 .content-section {
     padding: 60px 0 80px 0;
-    /* min-height: 250px; <-- ¡LÍNEA ELIMINADA! */
     position: relative;
     z-index: 5; 
 }
@@ -312,7 +314,7 @@ section {
     height: 0;
     opacity: 0;
     visibility: hidden;
-    border-left: 4px solid var(--color-accent);
+    border-left: 4px solid var(--color-highlight); 
     padding-left: 30px;
 }
 .content-panel#general {
@@ -331,7 +333,7 @@ section {
     align-items: center;
 }
 .check-icon {
-    color: var(--color-accent);
+    color: var(--color-highlight);
     font-weight: bold;
     font-size: 1.2rem;
     margin-right: 12px;
@@ -370,20 +372,68 @@ section {
     font-family: var(--font-heading);
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--color-accent);
+    color: var(--color-highlight);
     margin-bottom: 15px;
 }
 .process-step-title {
-    font-size: 1.25rem; 
+    font-size: 1rem; 
     margin-bottom: 10px;
 }
+
+/* --- 9.2. SECCIÓN DE SERVICIOS --- */
+.services-section {
+    background-color: var(--color-bg-secondary);
+    position: relative;
+    z-index: 5;
+    padding: 100px 0;
+}
+.service-list {
+    display: flex;
+    flex-direction: column;
+    gap: 80px; 
+}
+.service-item {
+    display: flex;
+    align-items: center;
+    
+}
+/* ¡AQUÍ ESTÁ LA REGLA "Z"! */
+.service-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+.service-item__icon {
+    flex-shrink: 0;
+    font-size: 5rem; 
+    width: 180px; 
+    text-align: center;
+    
+    color: transparent; 
+    -webkit-text-stroke: 2px var(--color-highlight); 
+    text-stroke: 2px var(--color-highlight);
+}
+.service-item__text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+.service-item__text p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+.service-separator {
+    border: 0;
+    height: 1px;
+    background-color: var(--color-border);
+    width: 80%;
+    margin: 0 auto;
+}
+
 
 /* --- 9.5. SECCIÓN PRE-FOOTER --- */
 .pre-footer-section {
     padding: 100px 0;
     text-align: center;
     position: relative;
-    overflow: hidden;
     background-color: var(--color-primary); 
     z-index: 5; 
 }
@@ -477,9 +527,17 @@ section {
     transition: opacity 0.3s ease;
     visibility: hidden;
 }
+.nav-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+}
 
 
-/* --- 11. MEDIA QUERIES (RESPONSIVE) --- */
+/* --- 11. ESTADOS INICIALES (para GSAP) --- */
+/* Vacío. GSAP usa .from() y lo maneja automáticamente */
+
+
+/* --- 12. MEDIA QUERIES (RESPONSIVE) --- */
 @media (max-width: 992px) {
     /* --- Header y Nav Móvil --- */
     .nav-toggle {
@@ -519,7 +577,6 @@ section {
         width: 100%;
     }
     .main-nav .cta-button {
-        
         text-align: center;
         margin-top: 15px;
     }
@@ -539,11 +596,9 @@ section {
         align-items: center;
     }
     .cta-group a {
-    
         max-width: 350px;
     }
     
-    /* Ocultamos el video en ambas secciones en móvil */
     .hero-section .hero-video,
     .pre-footer-section .hero-video {
         display: none;
@@ -570,6 +625,21 @@ section {
     /* --- Proceso --- */
     .process-grid {
         grid-template-columns: 1fr; 
+    }
+    /* --- Servicios --- */
+    .service-item,
+    .service-item:nth-child(even) {
+        flex-direction: column; 
+        text-align: center;
+        gap: 20px;
+    }
+    .service-item__icon {
+        width: auto;
+        font-size: 3.5rem; 
+    }
+    .service-separator {
+        width: 100%; 
+        margin: 0;
     }
 }
 

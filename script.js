@@ -4,16 +4,10 @@ document.addEventListener("DOMContentLoaded", function() {
     gsap.registerPlugin(ScrollTrigger);
 
     // --- 2. CONFIGURACIÓN DE SCROLL SUAVE (LENIS) + INTEGRACIÓN GSAP ---
-    
-    // 2.1. Configura Lenis
     const lenis = new Lenis();
-
-    // 2.2. Conecta Lenis con ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
-
-    // 2.3. Sincroniza el "ticker" (reloj) de GSAP con Lenis
     gsap.ticker.add((time) => {
-        lenis.raf(time * 1000); // Lenis usa milisegundos
+        lenis.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
 
@@ -22,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const cards = document.querySelectorAll(".card");
     const panels = document.querySelectorAll(".content-panel");
     const generalPanel = document.getElementById("general");
-
+    const contentSection = document.querySelector('.content-section');
     let currentActivePanel = generalPanel;
 
     cards.forEach(card => {
@@ -54,70 +48,98 @@ document.addEventListener("DOMContentLoaded", function() {
             );
 
             currentActivePanel = targetPanel;
+            
+            // --- SCROLL-TO (PULIDO) ---
+            lenis.scrollTo(contentSection, {
+                offset: -180, // Ajustado a tu nueva altura de header
+                duration: 1.2,
+                ease: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
         });
     });
 
 
-    // --- 4. ANIMACIONES DE SCROLL (GSAP) ---
+    // --- 4. ANIMACIONES DE SCROLL (NIVEL DIOS) ---
     
-    // 4.1. Animación del Hero (al cargar)
-    gsap.from(".hero-content", {
-        duration: 1,
-        y: 40,
+    // 4.1. Animación General de Carga
+    gsap.from('body', { duration: 0.5, autoAlpha: 0, ease: 'power3.out' });
+    gsap.from('.main-header', { duration: 1, yPercent: -100, autoAlpha: 0, ease: 'power3.out', delay: 0.1 });
+    gsap.from(".hero-content > *", { 
+        duration: 1.2,
+        y: 30,
         autoAlpha: 0,
-        delay: 0.2,
+        stagger: 0.1, 
+        delay: 0.4,
         ease: "power3.out"
     });
 
-    // 4.2. Animación de las Cards (al scrollear)
-    gsap.from(".card", {
-        duration: 0.8,
-        y: 30,
-        autoAlpha: 0,
-        stagger: 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: ".cards-container",
-            start: "top 85%",
-            toggleActions: "play none none none"
-        }
-    });
+    // 4.2. Animación "Weave" (Alternancia Horizontal) para Secciones
+    const sections = gsap.utils.toArray('main > section:not(.hero-section)');
 
-    // 4.3. Animación genérica de Secciones (¡INCLUYE EL FOOTER!)
-    const sections = gsap.utils.toArray('.gsap-fade-in');
-    
-    sections.forEach(section => {
-        gsap.from(section, {
-            autoAlpha: 0,
-            y: 40,
-            duration: 1.0,
-            ease: 'power3.out',
+    sections.forEach((section, index) => {
+        
+        // Elementos dentro de la sección para animar
+        const heading = section.querySelector('h2');
+        const subtitle = section.querySelector('.section-subtitle');
+        // Seleccionamos los *contenedores* principales
+        const content = section.querySelectorAll('.splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container');
+
+        // Determinamos la dirección (Izquierda para impares, Derecha para pares)
+        const xPercent = (index % 2 === 0) ? -50 : 50;
+
+        // Creamos la timeline
+        const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: section,
-                start: 'top 85%',
+                start: 'top 85%', // Un poco más abajo para que la animación sea más visible
                 toggleActions: 'play none none none'
             }
         });
+
+        // Animamos el título
+        if (heading) {
+            tl.from(heading, { 
+                autoAlpha: 0, 
+                xPercent: xPercent, 
+                duration: 1.2, // Más lento, más progresivo
+                ease: 'power3.out' 
+            });
+        }
+        
+        // Animamos el subtítulo
+        if (subtitle) {
+            tl.from(subtitle, { 
+                autoAlpha: 0, 
+                xPercent: xPercent, 
+                duration: 1.2, 
+                ease: 'power3.out' 
+            }, "-=1.0"); // Se solapa
+        }
+
+        // Animamos el bloque de contenido
+        if (content) {
+            tl.from(content, { 
+                autoAlpha: 0, 
+                xPercent: xPercent, 
+                duration: 1.2, 
+                ease: 'power3.out' 
+            }, "-=0.9"); // Se solapa
+        }
     });
 
     
     // --- 5. SLIDER DE TESTIMONIOS (Splide.js) ---
     if (typeof Splide !== 'undefined') {
         new Splide('#testimonial-slider', {
-            type   : 'loop',    // El carrusel es infinito
-            perPage: 2,       // 2 slides en desktop
+            type   : 'loop',
+            perPage: 2,
             perMove: 1,
-            gap    : '30px',  // Espacio entre slides
-            pagination: true, // Muestra los puntitos
-            arrows: true,   // Muestra las flechas
+            gap    : '30px',
+            pagination: true,
+            arrows: true,
             breakpoints: {
-                992: { // Tablet
-                    perPage: 1,
-                },
-                600: { // Móvil
-                    perPage: 1,
-                    arrows: false, // Ocultar flechas en móvil
-                }
+                992: { perPage: 1 },
+                600: { perPage: 1, arrows: false }
             }
         }).mount();
     }

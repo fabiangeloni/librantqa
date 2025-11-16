@@ -16,7 +16,7 @@
     
     --header-height: 180px; 
 }
-
+html{overflow-x: hidden;}
 /* --- 2. RESET Y ESTILOS GLOBALES --- */
 body {
     font-family: var(--font-body);
@@ -26,9 +26,10 @@ body {
     color: var(--color-text);
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; /* <-- ¡AQUÍ ESTÁ LA SOLUCIÓN! */
 }
 body.nav-active {
-    overflow: hidden;
+    overflow: hidden; /* Esto previene el scroll vertical */
 }
 
 .container {
@@ -395,9 +396,8 @@ section {
 .service-item {
     display: flex;
     align-items: center;
-    
+    gap: 50px;
 }
-/* ¡AQUÍ ESTÁ LA REGLA "Z"! */
 .service-item:nth-child(even) {
     flex-direction: row-reverse;
 }

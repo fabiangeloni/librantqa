@@ -75,78 +75,60 @@ document.addEventListener("DOMContentLoaded", function() {
     // 4.2. Animación "Weave" (Alternancia Horizontal)
     const sections = gsap.utils.toArray('main > section:not(.hero-section)');
 
-  // --- Animaciones con Inicio Adelantado para Móvil ---
-ScrollTrigger.matchMedia({
+    // --- ¡USAMOS MATCHMEDIA PARA TIMING DIFERENTE! ---
+    ScrollTrigger.matchMedia({
 
-    // DESKTOP
-    "(min-width: 993px)": function() {
+        // 1. Configuración para DESKTOP
+        "(min-width: 993px)": function() {
+            sections.forEach((section, index) => {
+                const heading = section.querySelector('h2');
+                const subtitle = section.querySelector('.section-subtitle');
+                // ¡Animamos los contenedores de contenido!
+                const content = section.querySelectorAll('.splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container');
 
-        sections.forEach((section, index) => {
-
-            const heading = section.querySelector("h2");
-            const subtitle = section.querySelector(".section-subtitle");
-            const content = section.querySelectorAll(".splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container");
-
-            const xPercent = (index % 2 === 0) ? -50 : 50;
-
-            gsap.timeline({
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top 85%",
-                    toggleActions: "play none none none",
-                    once: true
-                }
-            })
-            .from([heading, subtitle, content], {
-                autoAlpha: 0,
-                xPercent,
-                duration: 1.1,
-                ease: "power3.out",
-                stagger: 0.1
+                // Dirección del barrido
+                const xPercent = (index % 2 === 0) ? -50 : 50;
+                
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 85%', // <-- Trigger LENTO para desktop
+                        toggleActions: 'play none none none'
+                    }
+                });
+                
+                // ¡Animación HORIZONTAL (`xPercent`)!
+                if (heading) tl.from(heading, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' });
+                if (subtitle) tl.from(subtitle, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' }, "-=1.0");
+                if (content) tl.from(content, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' }, "-=0.9");
             });
-        });
-    },
+        },
 
-    // MÓVIL
-    "(max-width: 992px)": function() {
+        // 2. Configuración para MÓVIL
+        "(max-width: 992px)": function() {
+            sections.forEach((section, index) => {
+                const heading = section.querySelector('h2');
+                const subtitle = section.querySelector('.section-subtitle');
+                const content = section.querySelectorAll('.splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container');
+                
+                // Mantenemos la dirección
+                const xPercent = (index % 2 === 0) ? -50 : 50;
 
-        sections.forEach((section, index) => {
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top bottom-=10%', // <-- Trigger RÁPIDO para móvil (Arregla el espacio)
+                        toggleActions: 'play none none none'
+                    }
+                });
 
-            const heading = section.querySelector("h2");
-            const subtitle = section.querySelector(".section-subtitle");
-            const content = section.querySelectorAll(".splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container");
-
-            const xPercent = (index % 2 === 0) ? -50 : 50;
-
-            // 👉 Estado inicial para evitar "pantalla en blanco"
-            gsap.set([heading, subtitle, content], {
-                autoAlpha: 0,
-                xPercent
+                // Mantenemos la animación HORIZONTAL, pero más rápida
+                if (heading) tl.from(heading, { autoAlpha: 0, xPercent: xPercent, duration: 0.8, ease: 'power3.out' });
+                if (subtitle) tl.from(subtitle, { autoAlpha: 0, xPercent: xPercent, duration: 0.8, ease: 'power3.out' }, "-=0.7");
+                if (content) tl.from(content, { autoAlpha: 0, xPercent: xPercent, duration: 0.8, stagger: 0.1, ease: 'power3.out' }, "-=0.7");
             });
-
-            gsap.timeline({
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top 95%",   // 👉 dispara ANTES que antes
-                    toggleActions: "play none none none",
-                    once: true
-                }
-            })
-            .to([heading, subtitle, content], {
-                autoAlpha: 1,
-                xPercent: 0,
-                duration: 0.75,
-                ease: "power2.out",
-                stagger: 0.08
-            });
-        });
-    }
-});
-
-// 👉 MUY IMPORTANTE EN MÓVIL
-setTimeout(() => {
-    ScrollTrigger.refresh();
-}, 200);
+        }
+    });
 
     
     // --- 5. SLIDER DE TESTIMONIOS (Splide.js) ---

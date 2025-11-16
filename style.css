@@ -471,6 +471,104 @@ section {
     margin-bottom: 30px;
 }
 
+/* --- INICIA CÓDIGO NUEVO (PÉGALO EN TU STYLE.CSS) --- */
+
+/* 9.5.1 - Ajuste del contenedor para el formulario */
+.pre-footer-container {
+    max-width: 860px; /* Original era 700px, lo ampliamos para el form */
+}
+
+/* 9.6. FORMULARIO PRE-FOOTER */
+.contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas por defecto */
+    gap: 20px 30px;
+    margin-top: 40px;
+    text-align: left; /* Alinea el texto del form a la izquierda */
+}
+
+.form-group {
+    position: relative;
+}
+
+/* Hacemos que "Mensaje" y "Enviar" ocupen el ancho completo */
+.form-group.full-width,
+.form-submit.full-width {
+    grid-column: 1 / -1; /* Ocupa desde la columna 1 hasta la última */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8); /* Blanco con un poco de transparencia */
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+    padding: 14px 16px;
+    background-color: rgba(0, 0, 0, 0.2); /* Fondo oscuro transparente */
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Borde blanco semi-opaco */
+    border-radius: var(--radius); /* Usamos tu variable de radio! */
+    color: #FFFFFF;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* --- 🌟 AQUÍ ESTÁ EL EFECTO DE CLIC / FOCO 🌟 --- */
+
+/* 1. Cuando hacemos foco en el input/textarea... */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none; /* Quitamos el resplandor azul feo del navegador */
+    border-color: var(--color-highlight); /* Usamos tu color "highlight" (amarillo) */
+    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.3); /* Un resplandor suave a juego */
+}
+
+/* 2. Cuando el .form-group está "activo" (contiene el foco)... */
+.form-group:focus-within label {
+    color: var(--color-highlight); /* La etiqueta también se pone amarilla */
+}
+
+/* --- Fin del Efecto --- */
+
+
+.form-submit {
+    margin-top: 10px;
+}
+
+.form-submit .cta-button {
+    width: 100%; /* El botón ocupará todo el ancho */
+    padding: 12px 24px !important;
+    font-size: 1.1rem;
+}
+
+/* 9.7. RESPONSIVE DEL FORMULARIO */
+@media (max-width: 768px) {
+    .contact-form {
+        grid-template-columns: 1fr; /* 1 sola columna en móvil */
+        gap: 20px;
+    }
+
+    /* En móvil, ya no necesitamos la clase .full-width */
+    .form-group.full-width,
+    .form-submit.full-width {
+        grid-column: auto;
+    }
+}
+
+/* --- FIN DEL CÓDIGO NUEVO --- */
+
 /* --- 9.9. FOOTER --- */
 .main-footer {
     background-color: var(--color-primary);
@@ -692,5 +790,181 @@ section {
     }
     .main-nav {
         width: 100%; 
+    }
+}
+
+/* --- 9.9. FOOTER --- */
+/* Reemplazamos el estilo de .main-footer que tenías */
+.main-footer {
+    background-color: var(--color-primary);
+    color: var(--color-bg-secondary);
+    padding: 80px 0 40px 0; /* Más padding arriba */
+    text-align: left; /* Lo alineamos a la izquierda */
+    position: relative;
+    z-index: 5;
+    font-size: 0.95rem;
+}
+
+.footer-grid {
+    display: grid;
+    /* 4 columnas en desktop */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 40px;
+}
+
+.footer-logo {
+    height: 50px; /* Un poco más pequeño que en el header */
+    width: auto;
+    margin-bottom: 15px;
+}
+
+.footer-tagline {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.footer-column h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #FFFFFF;
+    margin: 0 0 20px 0;
+}
+
+/* Estilos para listas del footer */
+.footer-nav,
+.footer-contact {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-nav li,
+.footer-contact li {
+    margin-bottom: 12px;
+}
+
+.footer-nav a {
+    color: var(--color-bg-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-nav a:hover {
+    color: var(--color-highlight); /* Amarillo al pasar el mouse */
+}
+
+/* El CTA "Consultar" en el footer */
+.footer-cta {
+    font-weight: 700;
+    color: var(--color-highlight);
+}
+.footer-cta:hover {
+    color: #FFFFFF !important;
+}
+
+/* Estilos para la lista de contacto (con iconos) */
+.footer-contact li {
+    
+    gap: 12px;
+    color: var(--color-bg-secondary);
+    line-height: 1.6;
+}
+
+.footer-contact i {
+    font-size: 1rem;
+    color: var(--color-highlight); /* Iconos amarillos */
+    margin-top: 5px;
+}
+
+/* Estilos para redes sociales */
+.social-title {
+    margin-top: 30px; /* Separador de la lista "Legal" */
+}
+
+.social-icons a {
+    color: var(--color-bg-secondary);
+    font-size: 1.5rem;
+    margin-right: 20px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: var(--color-highlight);
+}
+
+/* Separador horizontal */
+.footer-divider {
+    border: 0;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 50px 0 30px 0;
+}
+
+/* Texto de Copyright */
+.footer-bottom p {
+    text-align: center;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+
+/* --- RESPONSIVE DEL FOOTER --- */
+/* Siguiendo tu breakpoint existente */
+@media (max-width: 992px) {
+    .footer-grid {
+        /* Pasamos de 4 a 2 columnas */
+        grid-template-columns: 1fr; 
+        gap: 50px 30px;
+    }
+
+    .footer-column {
+        /* Centramos el contenido de la columna 1 y 4 */
+        text-align: center;
+    }
+
+    .footer-column:nth-child(2),
+    .footer-column:nth-child(3) {
+        text-align: center; /* Dejamos nav y contacto a la izquierda */
+    }
+
+    .footer-logo {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-contact li {
+        justify-content: flex-start; /* Alinear items de contacto */
+    }
+}
+
+@media (max-width: 480px) {
+    .main-footer {
+        padding-top: 60px;
+        text-align: center; /* Todo centrado en móvil */
+    }
+
+    .footer-grid {
+        /* Pasamos a 1 columna */
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .footer-column,
+    .footer-column:nth-child(2),
+    .footer-column:nth-child(3) {
+        text-align: center; /* Forzar todo al centro */
+    }
+
+    .footer-contact li {
+        justify-content: center; /* Centrar items de contacto */
+        text-align: center;
+    }
+
+    .social-icons a {
+        margin: 0 12px; /* Ajustar espaciado de iconos */
     }
 }

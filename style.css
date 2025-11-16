@@ -641,7 +641,7 @@ section {
 
     .hero-section,
     .pre-footer-section {
-        background-image: url('hero-poster.jpg');
+        background-image: url('hero.png');
         background-size: cover;
         background-position: center center;
         padding: 80px 0; 

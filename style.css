@@ -16,8 +16,13 @@
     
     --header-height: 180px; 
 }
-html{overflow-x: hidden;}
-/* --- 2. RESET Y ESTILOS GLOBALES --- */
+html {
+  overflow-x: visible;
+}
+
+body {
+  overflow-x: clip; /* evita scroll lateral y NO rompe sticky */
+}
 body {
     font-family: var(--font-body);
     font-weight: 400;
@@ -26,7 +31,6 @@ body {
     color: var(--color-text);
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden; /* <-- ¡AQUÍ ESTÁ LA SOLUCIÓN! */
 }
 body.nav-active {
     overflow: hidden; /* Esto previene el scroll vertical */

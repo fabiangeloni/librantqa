@@ -16,12 +16,20 @@
     
     --header-height: 180px; 
 }
+
+/* * --- CAMBIO REALIZADO --- 
+ * Se eliminó 'overflow-x: visible;' de aquí.
+ */
 html {
-  overflow-x: visible;
+    /* overflow-x: visible;  <-- ELIMINADO */
 }
 
+/* * --- CAMBIO REALIZADO --- 
+ * Se eliminó 'overflow-x: clip;' de esta regla 'body'.
+ * Tu 'position: sticky' AHORA FUNCIONARÁ.
+ */
 body {
-  overflow-x: clip; /* evita scroll lateral y NO rompe sticky */
+    /* overflow-x: clip; <-- ELIMINADO */
 }
 body {
     font-family: var(--font-body);
@@ -31,9 +39,20 @@ body {
     color: var(--color-text);
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
+
 }
+
+/* * --- NUEVA REGLA AÑADIDA --- 
+ * Añadimos el 'overflow-x: clip' a nuestro nuevo wrapper.
+ * Esto oculta el scroll horizontal del menú móvil.
+ */
+.page-wrapper {
+    overflow-x: clip;
+}
+
+
 body.nav-active {
-    overflow: hidden; /* Esto previene el scroll vertical */
+    overflow: hidden; /* Esto está perfecto, previene scroll vertical con menú abierto */
 }
 
 .container {
@@ -144,7 +163,7 @@ a { color: var(--color-accent); text-decoration: none; }
 /* --- 5. SECCIONES --- */
 section {
     padding: 80px 0;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* --- SECCIÓN HERO --- */
@@ -440,6 +459,7 @@ section {
     position: relative;
     background-color: var(--color-primary); 
     z-index: 5; 
+    overflow: clip;
 }
 .pre-footer-container {
     position: relative; 
@@ -532,7 +552,7 @@ section {
     visibility: hidden;
 }
 .nav-overlay.is-active {
-    opacity: 1;
+    
     visibility: visible;
 }
 

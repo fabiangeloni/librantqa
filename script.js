@@ -72,18 +72,21 @@ document.addEventListener("DOMContentLoaded", function() {
         ease: "power3.out"
     });
 
+   // --- COPIA Y REEMPLAZA DESDE AQUÍ ---
+
     // 4.2. Animación "Weave" (Alternancia Horizontal)
     const sections = gsap.utils.toArray('main > section:not(.hero-section)');
 
     ScrollTrigger.matchMedia({
 
-        // 1. Configuración para DESKTOP (SÍ corre la animación "weave")
+        // 1. Configuración para DESKTOP (SÍ corre la animación "weave" horizontal)
         "(min-width: 993px)": function() {
             sections.forEach((section, index) => {
                 const heading = section.querySelector('h2');
                 const subtitle = section.querySelector('.section-subtitle');
                 const content = section.querySelectorAll('.splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container');
 
+                // Animación Horizontal (la que ya tenías)
                 const xPercent = (index % 2 === 0) ? -50 : 50;
                 
                 const tl = gsap.timeline({
@@ -100,16 +103,36 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         },
 
-        // 2. Configuración para MÓVIL (NO corre NINGUNA animación de scroll)
+        // 2. Configuración para MÓVIL (NUEVA Animación "Fade-In" vertical)
         "(max-width: 992px)": function() {
             
-            // ¡BLOQUE VACÍO!
-            // Al no crear ninguna animación de GSAP aquí, los elementos
-            // simplemente se mostrarán con su CSS por defecto.
-            // Esto elimina 100% el problema de los espacios en blanco.
+            // ¡Este es el bloque que antes estaba vacío!
+            // Ahora creamos una animación vertical simple.
             
+            sections.forEach((section) => {
+                // Seleccionamos todos los elementos que queremos animar DENTRO de la sección
+                const elementsToAnimate = section.querySelectorAll('h2, .section-subtitle, .splide, .card, .process-card, .service-item, .pre-footer-container h2, .pre-footer-container .subtitle, .main-footer p');
+                
+                if (elementsToAnimate.length === 0) return;
+
+                // Creamos la animación
+                gsap.from(elementsToAnimate, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 90%', // Empezar un poco después en móvil
+                        toggleActions: 'play none none none'
+                    },
+                    autoAlpha: 0, // Opacidad y visibility
+                    y: 40,        // Mover 40px hacia abajo (animará hacia arriba)
+                    duration: 0.8,
+                    stagger: 0.1, // Pequeño retraso entre cada elemento
+                    ease: 'power3.out'
+                });
+            });
         }
     });
+
+// --- HASTA AQUÍ ---
 
     
     // --- 5. SLIDER DE TESTIMONIOS (Splide.js) ---

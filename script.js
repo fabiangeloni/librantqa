@@ -49,9 +49,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
             currentActivePanel = targetPanel;
             
-            // --- SCROLL-TO (PULIDO) ---
             lenis.scrollTo(contentSection, {
-                offset: -180, // Ajustado a tu nueva altura de header
+                offset: -180, 
                 duration: 1.2,
                 ease: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
             });
@@ -59,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    // --- 4. ANIMACIONES DE SCROLL (NIVEL DIOS) ---
+    // --- 4. ANIMACIONES DE SCROLL (NIVEL DIOS CON MATCHMEDIA) ---
     
     // 4.1. Animación General de Carga
     gsap.from('body', { duration: 0.5, autoAlpha: 0, ease: 'power3.out' });
@@ -76,54 +75,56 @@ document.addEventListener("DOMContentLoaded", function() {
     // 4.2. Animación "Weave" (Alternancia Horizontal) para Secciones
     const sections = gsap.utils.toArray('main > section:not(.hero-section)');
 
-    sections.forEach((section, index) => {
-        
-        // Elementos dentro de la sección para animar
-        const heading = section.querySelector('h2');
-        const subtitle = section.querySelector('.section-subtitle');
-        // Seleccionamos los *contenedores* principales
-        const content = section.querySelectorAll('.splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container');
+    // --- ¡AQUÍ ESTÁ LA MAGIA! ---
+    // Usamos matchMedia para crear animaciones responsive
+    ScrollTrigger.matchMedia({
 
-        // Determinamos la dirección (Izquierda para impares, Derecha para pares)
-        const xPercent = (index % 2 === 0) ? -50 : 50;
+        // 1. Configuración para DESKTOP
+        "(min-width: 993px)": function() {
+            sections.forEach((section, index) => {
+                const heading = section.querySelector('h2');
+                const subtitle = section.querySelector('.section-subtitle');
+                const content = section.querySelectorAll('.splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container');
+                const xPercent = (index % 2 === 0) ? -50 : 50;
+                
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 85%', // <-- Trigger LENTO para desktop
+                        toggleActions: 'play none none none'
+                    }
+                });
 
-        // Creamos la timeline
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: section,
-                start: 'top 85%', // Un poco más abajo para que la animación sea más visible
-                toggleActions: 'play none none none'
-            }
-        });
-
-        // Animamos el título
-        if (heading) {
-            tl.from(heading, { 
-                autoAlpha: 0, 
-                xPercent: xPercent, 
-                duration: 1.2, // Más lento, más progresivo
-                ease: 'power3.out' 
+                if (heading) tl.from(heading, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' });
+                if (subtitle) tl.from(subtitle, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' }, "-=1.0");
+                if (content) tl.from(content, { autoAlpha: 0, xPercent: xPercent, duration: 1.2, ease: 'power3.out' }, "-=0.9");
             });
-        }
-        
-        // Animamos el subtítulo
-        if (subtitle) {
-            tl.from(subtitle, { 
-                autoAlpha: 0, 
-                xPercent: xPercent, 
-                duration: 1.2, 
-                ease: 'power3.out' 
-            }, "-=1.0"); // Se solapa
-        }
+        },
 
-        // Animamos el bloque de contenido
-        if (content) {
-            tl.from(content, { 
-                autoAlpha: 0, 
-                xPercent: xPercent, 
-                duration: 1.2, 
-                ease: 'power3.out' 
-            }, "-=0.9"); // Se solapa
+        // 2. Configuración para MÓVIL (¡LA CORRECCIÓN!)
+        "(max-width: 992px)": function() {
+            sections.forEach((section) => {
+                // En móvil, la animación horizontal "weave" no se ve bien.
+                // Cambiamos a una animación vertical (y: 30) que es más limpia
+                // y usamos el trigger RÁPIDO.
+                
+                const heading = section.querySelector('h2');
+                const subtitle = section.querySelector('.section-subtitle');
+                const content = section.querySelectorAll('.splide, .cards-container, .content-panel#general, .process-grid, .service-list, .pre-footer-container, .main-footer .container');
+
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 95%', // <-- Trigger RÁPIDO para móvil (¡ARREGLA EL ESPACIO EN BLANCO!)
+                        toggleActions: 'play none none none'
+                    }
+                });
+
+                // La animación ahora es vertical (y: 30) y más rápida
+                if (heading) tl.from(heading, { autoAlpha: 0, y: 30, duration: 0.8, ease: 'power3.out' });
+                if (subtitle) tl.from(subtitle, { autoAlpha: 0, y: 30, duration: 0.8, ease: 'power3.out' }, "-=0.7");
+                if (content) tl.from(content, { autoAlpha: 0, y: 30, duration: 0.8, stagger: 0.1, ease: 'power3.out' }, "-=0.7");
+            });
         }
     });
 

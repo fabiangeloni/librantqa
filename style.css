@@ -681,10 +681,10 @@ section {
 @media (max-width: 480px) {
     /* Ajustes finos para móviles pequeños */
     .container {
-        padding: 0 15px;
+        padding: 0 30px;
     }
     h1 {
-        font-size: 2rem;
+        font-size: 3rem;
     }
     h2 {
         font-size: 1.75rem;

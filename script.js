@@ -152,10 +152,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // --- 6. NAVEGACIÓN MÓVIL ---
+   // --- COPIA Y REEMPLAZA TODA LA SECCIÓN 6 CON ESTO ---
+
+    // --- 6. NAVEGACIÓN MÓVIL ---
     const navToggle = document.querySelector('.nav-toggle');
     const mainNav = document.querySelector('.main-nav');
     const navOverlay = document.querySelector('.nav-overlay');
-    const navLinks = document.querySelectorAll('.main-nav a');
+    const navLinks = document.querySelectorAll('.main-nav a'); // Seleccionamos TODOS los links
     const body = document.body;
 
     function openMenu() {
@@ -174,6 +177,7 @@ document.addEventListener("DOMContentLoaded", function() {
         navToggle.setAttribute('aria-expanded', 'false');
     }
 
+    // Lógica para abrir/cerrar con el botón
     navToggle.addEventListener('click', () => {
         if (mainNav.classList.contains('is-active')) {
             closeMenu();
@@ -182,10 +186,52 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    // Lógica para cerrar con el overlay
     navOverlay.addEventListener('click', closeMenu);
 
+    // --- ESTA ES LA PARTE NUEVA Y CORREGIDA ---
+    // Lógica inteligente para los links
     navLinks.forEach(link => {
-        link.addEventListener('click', closeMenu);
+        link.addEventListener('click', function(event) {
+            
+            // Obtenemos el destino (href) del link en el que se hizo clic
+            const href = this.getAttribute('href');
+
+            // ----------------------------------------------------
+            // CASO A: Es un link de ancla (href="#")
+            // (como "Servicios", "Nosotros", "Consultar")
+            // ----------------------------------------------------
+            if (href === '#') {
+                // 1. Prevenimos que la página salte al inicio
+                event.preventDefault();
+                // 2. Simplemente cerramos el menú
+                closeMenu();
+            } 
+            
+            // ----------------------------------------------------
+            // CASO B: Es un link que navega a OTRA página
+            // (como "index.html" o "index-en.html")
+            // ----------------------------------------------------
+            else {
+                // 1. Prevenimos la navegación INMEDIATA
+                event.preventDefault();
+                
+                // Guardamos la URL a la que queremos ir
+                const destination = href;
+
+                // 2. Cerramos el menú
+                closeMenu();
+
+                // 3. ESPERAMOS a que la animación de cierre termine
+                //    (Tu CSS dice que la transición dura 0.4s = 400ms)
+                //    y SÓLO ENTONCES navegamos a la nueva página.
+                setTimeout(() => {
+                    window.location.href = destination;
+                }, 400); 
+            }
+        });
     });
+
+// --- HASTA AQUÍ EL REEMPLAZO ---
 
 });

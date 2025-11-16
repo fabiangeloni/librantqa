@@ -75,13 +75,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // 4.2. Animación "Weave" (Alternancia Horizontal)
     const sections = gsap.utils.toArray('main > section:not(.hero-section)');
 
-  // --- ANIMACIONES RESPONSIVE CON MATCHMEDIA ---
+  // --- Animaciones con Inicio Adelantado para Móvil ---
 ScrollTrigger.matchMedia({
 
-    // -----------------------------------------
-    // 1) DESKTOP
-    // -----------------------------------------
-    "(min-width: 993px)": function () {
+    // DESKTOP
+    "(min-width: 993px)": function() {
+
         sections.forEach((section, index) => {
 
             const heading = section.querySelector("h2");
@@ -95,35 +94,21 @@ ScrollTrigger.matchMedia({
                     trigger: section,
                     start: "top 85%",
                     toggleActions: "play none none none",
-                    once: true,
-                    immediateRender: false
+                    once: true
                 }
             })
-            .from(heading, {
+            .from([heading, subtitle, content], {
                 autoAlpha: 0,
                 xPercent,
-                duration: 1.2,
-                ease: "power3.out"
-            })
-            .from(subtitle, {
-                autoAlpha: 0,
-                xPercent,
-                duration: 1.2,
-                ease: "power3.out"
-            }, "-=1.0")
-            .from(content, {
-                autoAlpha: 0,
-                xPercent,
-                duration: 1.2,
-                ease: "power3.out"
-            }, "-=1.0");
+                duration: 1.1,
+                ease: "power3.out",
+                stagger: 0.1
+            });
         });
     },
 
-    // -----------------------------------------
-    // 2) MOBILE
-    // -----------------------------------------
-    "(max-width: 992px)": function () {
+    // MÓVIL
+    "(max-width: 992px)": function() {
 
         sections.forEach((section, index) => {
 
@@ -133,38 +118,35 @@ ScrollTrigger.matchMedia({
 
             const xPercent = (index % 2 === 0) ? -50 : 50;
 
+            // 👉 Estado inicial para evitar "pantalla en blanco"
+            gsap.set([heading, subtitle, content], {
+                autoAlpha: 0,
+                xPercent
+            });
+
             gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
-                    start: "top bottom-=40%", 
-                    // Antes estaba demasiado tarde → “pantalla en blanco”
+                    start: "top 95%",   // 👉 dispara ANTES que antes
                     toggleActions: "play none none none",
-                    once: true,
-                    immediateRender: false 
+                    once: true
                 }
             })
-            .from(heading, {
-                autoAlpha: 0,
-                xPercent,
-                duration: 0.8,
-                ease: "power3.out"
-            })
-            .from(subtitle, {
-                autoAlpha: 0,
-                xPercent,
-                duration: 0.8,
-                ease: "power3.out"
-            }, "-=0.6")
-            .from(content, {
-                autoAlpha: 0,
-                xPercent,
-                duration: 0.8,
-                stagger: 0.08,
-                ease: "power3.out"
-            }, "-=0.6");
+            .to([heading, subtitle, content], {
+                autoAlpha: 1,
+                xPercent: 0,
+                duration: 0.75,
+                ease: "power2.out",
+                stagger: 0.08
+            });
         });
     }
 });
+
+// 👉 MUY IMPORTANTE EN MÓVIL
+setTimeout(() => {
+    ScrollTrigger.refresh();
+}, 200);
 
     
     // --- 5. SLIDER DE TESTIMONIOS (Splide.js) ---

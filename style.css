@@ -17,20 +17,7 @@
     --header-height: 180px; 
 }
 
-/* * --- CAMBIO REALIZADO --- 
- * Se eliminó 'overflow-x: visible;' de aquí.
- */
-html {
-    /* overflow-x: visible;  <-- ELIMINADO */
-}
 
-/* * --- CAMBIO REALIZADO --- 
- * Se eliminó 'overflow-x: clip;' de esta regla 'body'.
- * Tu 'position: sticky' AHORA FUNCIONARÁ.
- */
-body {
-    /* overflow-x: clip; <-- ELIMINADO */
-}
 body {
     font-family: var(--font-body);
     font-weight: 400;
@@ -70,7 +57,7 @@ h1, h2, h3, h4, h5 {
 
 h1 { font-size: 3rem; line-height: 1.2; }
 h2 { font-size: 2.25rem; text-align: center; margin-bottom: 40px; }
-h3 { font-size: 1.5rem; }
+h3 { font-size: 1.2rem; }
 p { margin: 0 0 15px 0; }
 a { color: var(--color-accent); text-decoration: none; }
 
@@ -299,6 +286,8 @@ section {
     padding: 30px;
     border-radius: var(--radius);
     cursor: pointer;
+    text-align: center;
+    line-height: 1.3;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .card:hover {

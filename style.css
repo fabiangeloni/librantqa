@@ -414,19 +414,19 @@ section {
 .service-list {
     display: flex;
     flex-direction: column;
-    gap: 80px; 
+    gap: 50px; 
 }
 .service-item {
     display: flex;
     align-items: center;
-    gap: 50px;
+    gap: 0px;
 }
 .service-item:nth-child(even) {
     flex-direction: row-reverse;
 }
 .service-item__icon {
     flex-shrink: 0;
-    font-size: 5rem; 
+    font-size: 7rem; 
     width: 180px; 
     text-align: center;
     
